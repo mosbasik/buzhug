@@ -30,6 +30,25 @@ public class SqlParser {
          * SQL cases, which are simple enough to parse on our own) (also be sure
          * to handle "exit" or "quit")
          */
+<<<<<<< HEAD
+        try {
+            System.out.println("Preparing buzhug environment.");
+            PySystemState sys = Py.getSystemState();
+//            sys.path.append(new PyString("/Users/saziz/jython2.7rc3/jython.jar"));
+//            sys.path.append(new PyString("/Users/saziz/Desktop/cs123/buzhug/buzhug"));
+//            System.out.println(sys);
+
+            sys.path.append(new PyString("/usr/java/Jython/jython.jar"));
+            sys.path.append(new PyString("/home/david/CS123/buzhug/buzhug"));
+
+            interpreter.exec("import sys");
+            interpreter.exec("print sys.version_info");
+
+            interpreter.exec("import buzhug");
+            interpreter.exec("from buzhug import Base");
+            ZqlParser p = null;
+            ZStatement st;
+=======
         System.out.println("Preparing buzhug environment.");
         PySystemState sys = Py.getSystemState();
         sys.path.append(new PyString("/usr/java/Jython/jython.jar"));
@@ -41,6 +60,7 @@ public class SqlParser {
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String thisLine = "";
         String fullCommand = "";
+>>>>>>> 218b4fc6b737ff778c46357b6bf7f5f74a9953d1
 
         if(args.length < 1) {
             System.out.println("Reading SQL from stdin (quit; or exit; to quit)");
@@ -102,6 +122,12 @@ public class SqlParser {
                 if (firstWord.equalsIgnoreCase("Create")) {
                     callCreate(fullCommand);
                 }
+<<<<<<< HEAD
+                else if (st instanceof ZUpdate) {
+                    callUpdate((ZUpdate) st);
+                    //System.out.println("Update not yet supported!");
+                    // TODO: call buzhug update with the parsed inputs
+=======
                 // Drop isn't actually supported by buzhug?!
                 /*else if (firstWord.equalsIgnoreCase("Drop")) {
                     callDrop(fullCommand);
@@ -141,6 +167,7 @@ public class SqlParser {
                         //e.printStackTrace();
                         System.out.println();
                     }
+>>>>>>> 218b4fc6b737ff778c46357b6bf7f5f74a9953d1
                 }
                 // We're done processing the current command. Reset the
                 // fullCommand string and begin reading the next command.
@@ -207,9 +234,16 @@ public class SqlParser {
                     System.out.println("Unable to create table: parsing error!");
                     return;
                 }
+<<<<<<< HEAD
+                else if (st instanceof ZQuery) {
+                    callSelect((ZQuery)st);
+//                    System.out.println("Select not yet supported!");
+                    // TODO: call buzhug select with the parsed inputs
+=======
                 else {
                     colTypePotential = st.substring(0, commaLoc);
                     st = "";
+>>>>>>> 218b4fc6b737ff778c46357b6bf7f5f74a9953d1
                 }
             }
             else {
@@ -384,6 +418,7 @@ public class SqlParser {
     }
     
     private static void callUpdate(ZUpdate st) {
+<<<<<<< HEAD
         String table = st.getTable();
         // i think this is how tables are opened? Not sure since I can't execute...
         // loading the table
@@ -403,10 +438,7 @@ public class SqlParser {
     }
     
     private static void callDelete(ZDelete st) {
-        // 1. Get a buzhug select statement from the where clause
-        // 2. get the associated records within the buzhug environment
-        // 3. use those records with buzhug's delete method
-        System.out.println("Delete not yet supported!");
+
     }
     
     private static void callSelect(ZQuery st) {
@@ -448,6 +480,23 @@ public class SqlParser {
         interpreter.exec(cmd);
         interpreter.exec("for a in result_set:");
         interpreter.exec("\tprint a");
+=======
+        // 1. Get a buzhug select statement from the where clause
+        // 2. get the associated records within the buzhug environment
+        // 3. use those records with buzhug's update method
+        System.out.println("Update not yet supported!");
+    }
+    
+    private static void callDelete(ZDelete st) {
+        // 1. Get a buzhug select statement from the where clause
+        // 2. get the associated records within the buzhug environment
+        // 3. use those records with buzhug's delete method
+        System.out.println("Delete not yet supported!");
+    }
+    
+    private static void callSelect(ZQuery st) {
+        System.out.println("Select not yet supported!");
+>>>>>>> 218b4fc6b737ff778c46357b6bf7f5f74a9953d1
     }
     
     // Returns the buzhug-formated select statement generated from st.
