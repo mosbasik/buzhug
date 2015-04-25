@@ -76,8 +76,8 @@ public class SqlParser {
                 int firstSpace = fullCommand.indexOf(' ');
                 // If firstSpace is -1, then there are no spaces. Check that
                 // the command is either exit; or quit; and if it isn't,
-                // print an error and return to beginning of the loop (since
-                // no valid SQL query has no spaces).
+                // set "firstWord" to be the entire command.
+                String firstWord = "";
                 if (firstSpace == -1) {
                     if (fullCommand.equalsIgnoreCase("exit;") ||
                         fullCommand.equalsIgnoreCase("quit;")) {
@@ -85,50 +85,57 @@ public class SqlParser {
                         System.exit(0);
                     }
                     else {
-                        System.out.println("Invalid command:\n" + fullCommand);
+                        firstWord = fullCommand;
                     }
                 }
+                
+                // If firstWord is not set, then set it appropriately.
+                if (firstWord.length() == 0 && firstSpace != -1) {
+                    firstWord = fullCommand.substring(0, firstSpace);
+                }
+                // If the first word is 'Create' or 'Drop', then handle
+                // the command. Otherwise, call ZqlParser on it and
+                // handle the parsing that way.
+                if (firstWord.equalsIgnoreCase("Create")) {
+                    callCreate(fullCommand);
+                }
+                else if (firstWord.equalsIgnoreCase("Drop")) {
+                    callDrop(fullCommand);
+                }
                 else {
-                    String firstWord = fullCommand.substring(0, firstSpace);
-                    // If the first word is 'Create' or 'Drop', then handle
-                    // the command. Otherwise, call ZqlParser on it and
-                    // handle the parsing that way.
-                    if (firstWord.equalsIgnoreCase("Create")) {
-                        callCreate(fullCommand);
-                    }
-                    else if (firstWord.equalsIgnoreCase("Drop")) {
-                        callDrop(fullCommand);
-                    }
-                    else {
-                        // Create a ZqlParser from fullCommand
-                        try {
-                            InputStream stream = new ByteArrayInputStream(
-                                  fullCommand.getBytes("UTF-8"));
-                            ZqlParser p = new ZqlParser(stream);
-                            ZStatement st = p.readStatement();
-                            
-                            if (st instanceof ZInsert) {
-                                callInsert((ZInsert)st);
-                            }
-                            else if (st instanceof ZUpdate) {
-                                callUpdate((ZUpdate) st);
-                            }
-                            else if (st instanceof ZDelete) {
-                                callDelete((ZDelete) st);
-                            }
-                            else if (st instanceof ZQuery) {
-                                callSelect((ZQuery) st);
-                            }
+                    // Create a ZqlParser from fullCommand
+                    try {
+                        InputStream stream = new ByteArrayInputStream(
+                              fullCommand.getBytes("UTF-8"));
+                        ZqlParser p = new ZqlParser(stream);
+                        ZStatement st = p.readStatement();
+                        
+                        if (st instanceof ZInsert) {
+                            callInsert((ZInsert)st);
                         }
-                        catch(Exception e) {
-                            System.out.println("\nError parsing SQL command:\n" 
-                                                + fullCommand);
-                            // Debugging? Might not need to leave this in the
-                            // final project
-                            System.out.println("Stack Trace:");
-                            e.printStackTrace();
-                            System.out.println();
+                        else if (st instanceof ZUpdate) {
+                            callUpdate((ZUpdate) st);
                         }
+                        else if (st instanceof ZDelete) {
+                            callDelete((ZDelete) st);
+                        }
+                        else if (st instanceof ZQuery) {
+                            callSelect((ZQuery) st);
+                        }
+                        else {
+                            System.out.println("Command unsupported by buzhug:"
+                                                + "\n" + fullCommand);
+                        }
+                    }
+                    catch(Exception e) {
+                        System.out.println("\nError parsing SQL command:\n" 
+                                            + fullCommand);
+                        System.out.println("Error Message: " + e.getMessage());
+                        // Debugging? Might not need to leave this in the
+                        // final project
+                        //System.out.println("Stack Trace:");
+                        //e.printStackTrace();
+                        System.out.println();
                     }
                 }
                 // We're done processing the current command. Reset the
