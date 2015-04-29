@@ -137,8 +137,8 @@ public class SqlParser {
                         System.out.println("Error Message: " + e.getMessage());
                         // Debugging? Might not need to leave this in the
                         // final project
-                        //System.out.println("Stack Trace:");
-                        //e.printStackTrace();
+                        System.out.println("Stack Trace:");
+                        e.printStackTrace();
                         System.out.println();
                     }
                 }
@@ -385,21 +385,31 @@ public class SqlParser {
     
     private static void callUpdate(ZUpdate st) {
         String table = st.getTable();
-        // i think this is how tables are opened? Not sure since I can't execute...
-        // loading the table
-        interpreter.exec("temp = Base('/home/david/CS123/buzhug/javasrc/tables/'"+table+".db).open()");
         // finding the records to update
         String cmd1 = "recs = temp.select_for_update(None, " + st.getWhere() + ")";
-        interpreter.exec(cmd1);
         // updating
         String cmd2 = table + ".update(recs, ";
-        HashSet vals = st.getSet();
-        for(String col:vals.keys())
+        Hashtable<String,ZConstant> vals = st.getSet();
+        for(String col:vals.keySet())
         {
             cmd2+=col+"="+vals.get(col).toString()+",";
         }
         cmd2 = cmd2.substring(0, cmd2.length()-1) + ")";
-        interpreter.exec(cmd2);
+        //interpreter.exec(cmd2);
+        // call buzhug.
+        System.out.println(cmd1);
+        System.out.println(cmd2);
+        try {
+            //load the table
+            interpreter.exec("temp = Base('/home/david/CS123/buzhug/javasrc/tables/" + table + "').open()");
+            interpreter.exec(cmd1);
+            interpreter.exec(cmd2);
+        }
+        catch (Exception e) {
+            System.out.println("Python Interpreter exception: " + e.getMessage());
+            System.out.println("Stacktrace:");
+            e.printStackTrace();
+        }
     }
     
     private static void callDelete(ZDelete st) {
@@ -418,36 +428,44 @@ public class SqlParser {
             System.out.println("Only simple joins work");
             return;
         }
-        //  its a *(i have to check what's in getSelect() when its a star)
-        // can't run at the moment, so im assuming null
-        if(st.getSelect() == null)
-        {
-            cmd += "db.select(None)";
+    
+        Vector columns = st.getSelect();
+        String values = "[";
+        for (int i = 0; i < columns.size(); i++) {
+            values = values + columns.get(i) + ",";
         }
-        // if it's not a star, simply go through and find the columns
-        // we're looking for
-        else
-        {
-            Vector columns = st.getSelect();
-            String values = "[";
-            for (int i = 0; i < columns.size(); i++) {
-                values = values + columns.get(i) + ",";
-            }
-            values = values.substring(0, values.length()-1);
-            values += ']';
-            cmd += "db.select("+values + ")";
+        values = values.substring(0, values.length()-1);
+        values += "]";
+        
+        // If the select is a wildcard, then set values to ""
+        if (values.substring(1,2).equals("*")) {
+            values = "";
         }
+        cmd += "db.select("+values + ")";
+        
         // if there is a where, we add it
         if(st.getWhere() != null)
         {
             cmd = cmd.substring(0, cmd.length() - 1);
             cmd += "," + st.getWhere().toString()+")";
         }
+        System.out.println(cmd);
+
         // run on python
-        interpreter.exec("db = Base('/home/david/CS123/buzhug/javasrc/tables/"+st.getFrom().toString()+"').open()");
-        interpreter.exec(cmd);
-        interpreter.exec("for a in result_set:");
-        interpreter.exec("\tprint a");
+        try {
+            //Get the table name
+            String tableName = st.getFrom().get(0).toString();
+            interpreter.exec("db = Base('/home/david/CS123/buzhug/javasrc/tables/" + tableName + "').open()");
+            interpreter.exec(cmd);
+            // Get the results so we can print them in java
+            PyObject test = interpreter.eval("result_set");
+            System.out.println(test.toString());
+        }
+        catch (Exception e) {
+            System.out.println("Python Interpreter exception: " + e.getMessage());
+            System.out.println("Stacktrace:");
+            e.printStackTrace();
+        }
     }
     
     // Returns the buzhug-formated select statement generated from st.
