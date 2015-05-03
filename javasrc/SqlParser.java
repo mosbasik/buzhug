@@ -380,7 +380,6 @@ public class SqlParser {
         String table = st.getTable();
         // finding the records to update
         String where = st.getWhere().toString();
-        System.out.println(where); //debugging
         // Remove the parentheses
         where = where.substring(1, where.length()-1);
         String cmd1 = "recs = " + table + ".select_for_update(None, " + where + ")";
@@ -412,10 +411,33 @@ public class SqlParser {
     }
     
     private static void callDelete(ZDelete st) {
-        // 1. Get a buzhug select statement from the where clause
-        // 2. get the associated records within the buzhug environment
-        // 3. use those records with buzhug's delete method
-        System.out.println("Delete not yet supported!");
+        String table = st.getTable();
+        // finding the records to delete
+        String where = st.getWhere().toString();
+        System.out.println(where); //debugging
+        // Remove the parentheses
+        where = where.substring(1, where.length()-1);
+        String cmd1 = "recs = " + table + ".select(None, " + where + ")";
+        // deleting
+        String cmd2 = table + ".delete(recs)";
+        // print out the formated statements, mostly for debugging purposes
+        System.out.println("Buzhug-formated statements:");
+        System.out.println(cmd1);
+        System.out.println(cmd2);
+        // call buzhug
+        try {
+            //load the table
+            interpreter.exec(table +
+                             " = Base('/home/david/CS123/buzhug/javasrc/tables/"
+                             + table + "').open()");
+            interpreter.exec(cmd1);
+            interpreter.exec(cmd2);
+        }
+        catch (Exception e) {
+            System.out.println("Python Interpreter exception: " + e.getMessage());
+            System.out.println("Stacktrace:");
+            e.printStackTrace();
+        }
     }
     
     private static void callSelect(ZQuery st) {
@@ -424,7 +446,7 @@ public class SqlParser {
         // make sure its a simple select
         if(st.getFrom().contains("join"))
         {
-            System.out.println("Only simple joins work");
+            System.out.println("Only simple selects work");
             return;
         }
     
