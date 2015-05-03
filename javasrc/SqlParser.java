@@ -16,21 +16,12 @@ import org.gibello.zql.data.*;
 public class SqlParser {
     private static String basePath = "/home/david/CS123/buzhug/javasrc/tables/";
 
-    private static PythonInterpreter interpreter = new PythonInterpreter(null, new PySystemState());
+    private static PythonInterpreter interpreter = new PythonInterpreter(null,
+                                                           new PySystemState());
 
     
     public static void main(String args[]) {
-        /* If the user inputs an incorrect SQL statement, st = p.readStatement()
-         * will throw an exception.
-         * TODO: find a way to gracefully handle the exception instead of
-         * crashing.
-         * ^ We can do this by reading inputs as strings and then turning the
-         * string into an inputStream and initializing a ZqlParser on it as
-         * necessary. (This will also allow us to handle "Create" and "Drop"
-         * SQL cases, which are simple enough to parse on our own) (also be sure
-         * to handle "exit" or "quit")
-         */
-        System.out.println("Preparing buzhug environment.");
+        System.out.println("Preparing buzhug environment...");
         PySystemState sys = Py.getSystemState();
         sys.path.append(new PyString("/usr/java/Jython/jython.jar"));
         sys.path.append(new PyString("/home/david/CS123/buzhug/buzhug"));
@@ -44,7 +35,8 @@ public class SqlParser {
 
         if(args.length < 1) {
             System.out.println("Reading SQL from stdin (quit; or exit; to quit)");
-        } else {
+        } 
+        else {
             try {
                 System.out.println("Reading SQL from file " + args[0]);
                 in = new BufferedReader(new FileReader(args[0]));
@@ -110,7 +102,7 @@ public class SqlParser {
                     // Create a ZqlParser from fullCommand
                     try {
                         InputStream stream = new ByteArrayInputStream(
-                              fullCommand.getBytes("UTF-8"));
+                                                 fullCommand.getBytes("UTF-8"));
                         ZqlParser p = new ZqlParser(stream);
                         ZStatement st = p.readStatement();
                         
@@ -154,8 +146,9 @@ public class SqlParser {
         }
     }
     
+    /* Zql does not parse SQL DDL, so we are forced to manually parse a string
+     * for table creation. */
     private static void callCreate(String st) {
-        //System.out.println("Create table not yet supported!");
         // Get the table name
         String tableName = "";
         while (tableName.length() == 0) {
@@ -168,7 +161,8 @@ public class SqlParser {
             String tmp = st.substring(0, nextSpace);
             st = st.substring(nextSpace + 1);
             st.trim();
-            if(!tmp.equalsIgnoreCase("Create") && !tmp.equalsIgnoreCase("Table")) {
+            if(!tmp.equalsIgnoreCase("Create") && 
+               !tmp.equalsIgnoreCase("Table")) {
                 tableName = tmp;
             }
         }
@@ -259,9 +253,8 @@ public class SqlParser {
             // datetime column types. Technically it also supports "links",
             // but these are basically equivalent to foreign keys, which we can
             // deal with once we implement joins (if we implement joins...)
-            // It may not be standard sql, strictly speaking, but if a column
-            // type is not one of the above then we will ignore it and print
-            // an error.
+            // It may not be standard sql, but if a column type is not one of 
+            // the above then we will ignore it and print an error.
             if(!colType.equalsIgnoreCase("str") && 
                !colType.equalsIgnoreCase("unicode") &&
                !colType.equalsIgnoreCase("int") &&
@@ -386,7 +379,11 @@ public class SqlParser {
     private static void callUpdate(ZUpdate st) {
         String table = st.getTable();
         // finding the records to update
-        String cmd1 = "recs = temp.select_for_update(None, " + st.getWhere() + ")";
+        String where = st.getWhere().toString();
+        System.out.println(where); //debugging
+        // Remove the parentheses
+        where = where.substring(1, where.length()-1);
+        String cmd1 = "recs = " + table + ".select_for_update(None, " + where + ")";
         // updating
         String cmd2 = table + ".update(recs, ";
         Hashtable<String,ZConstant> vals = st.getSet();
@@ -401,7 +398,9 @@ public class SqlParser {
         System.out.println(cmd2);
         try {
             //load the table
-            interpreter.exec("temp = Base('/home/david/CS123/buzhug/javasrc/tables/" + table + "').open()");
+            interpreter.exec(table +
+                             " = Base('/home/david/CS123/buzhug/javasrc/tables/"
+                             + table + "').open()");
             interpreter.exec(cmd1);
             interpreter.exec(cmd2);
         }
