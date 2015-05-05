@@ -127,8 +127,8 @@ public class SqlParser {
                         System.out.println("Error Message: " + e.getMessage());
                         // Debugging? Might not need to leave this in the
                         // final project
-                        System.out.println("Stack Trace:");
-                        e.printStackTrace();
+                        //System.out.println("Stack Trace:");
+                        //e.printStackTrace();
                         System.out.println();
                     }
                 }
