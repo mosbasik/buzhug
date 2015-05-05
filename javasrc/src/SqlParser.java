@@ -1,5 +1,3 @@
-// This shouldn't be needed since I set up the ant build.xml
-// Classpath: .:/home/david/zql/classes:/usr/bin/python:/usr/java/Jython:/usr/java/Jython/jython.jar:/home/david/CS123/buzhug/javasrc
 
 import org.python.util.PythonInterpreter;
 import org.python.core.*;
@@ -14,7 +12,7 @@ import org.gibello.zql.*;
 import org.gibello.zql.data.*;
 
 public class SqlParser {
-    private static String basePath = "/home/david/CS123/buzhug/javasrc/tables/";
+    private static String basePath = "tables/";
 
     private static PythonInterpreter interpreter = new PythonInterpreter(null,
                                                            new PySystemState());
@@ -23,8 +21,8 @@ public class SqlParser {
     public static void main(String args[]) {
         System.out.println("Preparing buzhug environment...");
         PySystemState sys = Py.getSystemState();
-        sys.path.append(new PyString("/usr/java/Jython/jython.jar"));
-        sys.path.append(new PyString("/home/david/CS123/buzhug/buzhug"));
+        sys.path.append(new PyString("lib/Jython/jython.jar"));
+        sys.path.append(new PyString("lib/buzhug"));
         interpreter.exec("import buzhug");
         interpreter.exec("from buzhug import Base");
         
@@ -401,8 +399,7 @@ public class SqlParser {
         try {
             //load the table
             interpreter.exec(table +
-                             " = Base('/home/david/CS123/buzhug/javasrc/tables/"
-                             + table + "').open()");
+                             " = Base('" + basePath + table + "').open()");
             interpreter.exec(cmd1);
             interpreter.exec(cmd2);
         }
@@ -430,9 +427,7 @@ public class SqlParser {
         // call buzhug
         try {
             //load the table
-            interpreter.exec(table +
-                             " = Base('/home/david/CS123/buzhug/javasrc/tables/"
-                             + table + "').open()");
+            interpreter.exec(table + " = Base('" + basePath + table + "').open()");
             interpreter.exec(cmd1);
             interpreter.exec(cmd2);
         }
@@ -479,7 +474,7 @@ public class SqlParser {
         try {
             //Get the table name
             String tableName = st.getFrom().get(0).toString();
-            interpreter.exec("db = Base('/home/david/CS123/buzhug/javasrc/tables/" + tableName + "').open()");
+            interpreter.exec("db = Base('" + basePath + tableName + "').open()");
             interpreter.exec(cmd);
             // Get the results so we can print them in java
             PyObject test = interpreter.eval("result_set");
