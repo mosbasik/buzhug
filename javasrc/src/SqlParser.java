@@ -377,9 +377,7 @@ public class SqlParser {
     private static void callUpdate(ZUpdate st) {
         String table = st.getTable();
         // finding the records to update
-        String where = st.getWhere().toString();
-        // Remove the parentheses
-        where = where.substring(1, where.length()-1);
+        String where = formatWhere(st.getWhere());
         String cmd1 = "recs = " + table + ".select_for_update(None, " + where + ")";
         // updating
         String cmd2 = table + ".update(recs, ";
@@ -413,10 +411,7 @@ public class SqlParser {
     private static void callDelete(ZDelete st) {
         String table = st.getTable();
         // finding the records to delete
-        String where = st.getWhere().toString();
-        System.out.println(where); //debugging
-        // Remove the parentheses
-        where = where.substring(1, where.length()-1);
+        String where = formatWhere(st.getWhere());
         String cmd1 = "recs = " + table + ".select(None, " + where + ")";
         // deleting
         String cmd2 = table + ".delete(recs)";
@@ -494,5 +489,68 @@ public class SqlParser {
         System.out.println("formatSelect not yet supported!");
         String buzhugSelect = "";
         return buzhugSelect;
+    }
+    
+    // Turn a where clause into a format supported by Buzhug's select function
+    private static String formatWhere(ZExp wh) {
+        String result = helperWhere(wh, 0);
+        int semiColon = result.indexOf(';');
+        String where = "\"" + result.substring(0,semiColon) + "\"," 
+                       + result.substring(semiColon+1);
+        return where;
+    }
+    
+    /* Helper function for formatWhere
+     *
+     * wh is the where clause. c is an integer value that is intended to ensure
+     * than none of the "temporary" variables in the buzhug select share the
+     * same name
+     */
+    private static String helperWhere(ZExp wh, int c) {
+        String where = "";
+        if (wh instanceof ZQuery) {
+            System.out.println("Error: ZExp wh should be a where clause, not" +
+                               " a full-blown query!");
+            where = "ERROR";
+        }
+        else if (wh instanceof ZExpression) {
+            ZExpression w = (ZExpression) wh;
+            String operator = w.getOperator().toLowerCase();
+            if (operator.equals("="))
+                operator = "==";
+            String whereFront = "";
+            String whereBack = "";
+            
+            for(int i = 0; i < w.nbOperands(); i++) {
+                String tmp = helperWhere(w.getOperand(i), c + i + 1000);
+                if (tmp.equals("ERROR"))
+                    return "ERROR";
+                
+                int semiColon = tmp.indexOf(';');
+                whereFront = whereFront + tmp.substring(0, semiColon) 
+                             + " " + operator + " ";
+                if (semiColon+1 < tmp.length())
+                    whereBack = whereBack + tmp.substring(semiColon+1) + ",";
+            }
+            where = whereFront.substring(0, whereFront.length() - operator.length() - 2)
+                    + ";" + 
+                    whereBack.substring(0, whereBack.length() - 1);
+        }
+        else if (wh instanceof ZConstant) {
+            ZConstant w = (ZConstant) wh;
+            if (w.getType() == ZConstant.COLUMNNAME) {
+                where = w.getValue() + ";";
+            }
+            else {
+                where = "tmp" + String.valueOf(c) + ";" +
+                        "tmp" + String.valueOf(c) + "=" + w.getValue();
+            }
+        }
+        else {
+            System.out.println("Error: ZExp wh not ZQuery, ZExpression," +
+                               " or ZConstant");
+            where = "ERROR";
+        }
+        return where;
     }
 }
