@@ -350,6 +350,7 @@ public class SqlParser {
             else {
                 System.out.println("Error: number of columns not equal to " +
                     "number of values.");
+                return;
             }
         }
 
@@ -359,7 +360,7 @@ public class SqlParser {
         buzhugInsert = buzhugInsert + ")";
         
         // Debugging purposes
-        System.out.println("Formated statement:\n" + buzhugInsert);
+        System.out.println("Buzhug-Formated statement:\n" + buzhugInsert);
         
         // call buzhug.
         try {
@@ -473,7 +474,8 @@ public class SqlParser {
             interpreter.exec(cmd);
             // Get the results so we can print them in java
             PyObject test = interpreter.eval("result_set");
-            System.out.println(test.toString());
+            //System.out.println(test.toString());
+            selectPrinter(test.toString());
         }
         catch (Exception e) {
             System.out.println("Python Interpreter exception: " + e.getMessage());
@@ -552,5 +554,52 @@ public class SqlParser {
             where = "ERROR";
         }
         return where;
+    }
+    
+    // Takes a string that is the result of a select call to buzhug and formats
+    // it to look like a table.
+    private static void selectPrinter(String sel) {
+        ArrayList<String> row = new ArrayList<String>();
+        // Cut off the [] from sel
+        sel = sel.substring(1, sel.length()-1);
+        
+        int lastBrack = sel.indexOf('>');
+        while (lastBrack != -1) {
+            String thisRow = sel.substring(1, lastBrack);
+            // Remove the __id__ and __version__ fields that buzhug adds
+            int spaceLoc = thisRow.indexOf(' ');
+            thisRow = thisRow.substring(spaceLoc+1);
+            spaceLoc = thisRow.indexOf(' ');
+            thisRow = thisRow.substring(spaceLoc+1);
+            
+            row.add(thisRow);
+            // +2 to account for the comma and the space after the '>'
+            if (lastBrack+2 > sel.length())
+                sel = "";
+            else
+                sel = sel.substring(lastBrack+2);
+                
+            lastBrack = sel.indexOf('>');
+        }
+        
+        // Get the column names
+        ArrayList<String> colNames = new ArrayList<String>();
+        String tmp = row.get(0);
+        int colon = tmp.indexOf(':');
+        while (colon != -1) {
+            colNames.add(tmp.substring(0,colon));
+            if (tmp.indexOf(' ') == -1)
+                tmp = "";
+            else
+                tmp = tmp.substring(tmp.indexOf(' ') + 1);
+            colon = tmp.indexOf(':');
+        }
+        
+        // Start printing shit
+        // Temporary solution: simply print out the rows, now that we've removed
+        // the __id__ and __version__ nonsense
+        for (int i = 0; i < row.size(); i++) {
+            System.out.println(row.get(i));
+        }
     }
 }
