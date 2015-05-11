@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svnroot/zql/!svn/ver/4/parser
+END
+ZqlJJParser.CASE
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/zql/!svn/ver/4/parser/ZqlJJParser.CASE
+END
+ZqlJJParser_Kor.jj
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/zql/!svn/ver/4/parser/ZqlJJParser_Kor.jj
+END
+ZqlJJParser_outerjoin.jj
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/zql/!svn/ver/4/parser/ZqlJJParser_outerjoin.jj
+END
+ZqlJJParser.jj
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svnroot/zql/!svn/ver/4/parser/ZqlJJParser.jj
+END

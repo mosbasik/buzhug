@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 24
+/svnroot/zql/!svn/ver/11
+END
+COPYING
+K 25
+svn:wc:ra_dav:version-url
+V 31
+/svnroot/zql/!svn/ver/4/COPYING
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 30
+/svnroot/zql/!svn/ver/3/README
+END
+makefile
+K 25
+svn:wc:ra_dav:version-url
+V 32
+/svnroot/zql/!svn/ver/5/makefile
+END

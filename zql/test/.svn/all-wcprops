@@ -1,0 +1,11 @@
+K 25
+svn:wc:ra_dav:version-url
+V 28
+/svnroot/zql/!svn/ver/1/test
+END
+TEST.in
+K 25
+svn:wc:ra_dav:version-url
+V 36
+/svnroot/zql/!svn/ver/1/test/TEST.in
+END

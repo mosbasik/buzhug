@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svnroot/zql/!svn/ver/9/src/org/gibello/zql
+END
+ZQuery.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZQuery.java
+END
+ZOrderBy.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZOrderBy.java
+END
+ZFromItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZFromItem.java
+END
+ZUpdate.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZUpdate.java
+END
+ZGroupBy.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZGroupBy.java
+END
+ZTransactStmt.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZTransactStmt.java
+END
+ZqlParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZqlParser.java
+END
+ZConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZConstant.java
+END
+ZExp.java
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZExp.java
+END
+ZSelectItem.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZSelectItem.java
+END
+ZExpression.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZExpression.java
+END
+ZUtils.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZUtils.java
+END
+ZLockTable.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZLockTable.java
+END
+ZDelete.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZDelete.java
+END
+ZAliasedName.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/zql/!svn/ver/9/src/org/gibello/zql/ZAliasedName.java
+END
+ZStatement.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZStatement.java
+END
+ZInsert.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/zql/!svn/ver/4/src/org/gibello/zql/ZInsert.java
+END

@@ -1,0 +1,27 @@
+To run Zql:
+===========
+
+java org.gibello.zql.ZqlParser
+(the classpath has to point on the classes/ directory).
+
+If you have a source release of Zql:
+====================================
+
+1) To generate the parser
+
+A Unix makefile is provided in the root directory.
+
+- To get a copy of JavaCC:
+https://javacc.dev.java.net/
+
+
+2) Other source files
+
+- The src/org/gibello/zql directory contains the sources for the Zql API classes.
+
+- The src/org/gibello/zql/data directory contains the sources for the basic
+expression evaluator that comes with Zql (used in the Zql demo).
+
+3) To generate the doc
+See the makefile (if on Unix, run it).
+

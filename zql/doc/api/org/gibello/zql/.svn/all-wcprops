@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql
+END
+ZUpdate.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZUpdate.html
+END
+ZFromItem.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZFromItem.html
+END
+ZTransactStmt.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZTransactStmt.html
+END
+ZGroupBy.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZGroupBy.html
+END
+ZConstant.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZConstant.html
+END
+ZqlParser.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZqlParser.html
+END
+package-frame.html
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/package-frame.html
+END
+ZExp.html
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZExp.html
+END
+package-summary.html
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/package-summary.html
+END
+ZSelectItem.html
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZSelectItem.html
+END
+package-tree.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/package-tree.html
+END
+ZExpression.html
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZExpression.html
+END
+ZLockTable.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZLockTable.html
+END
+ZUtils.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZUtils.html
+END
+ZDelete.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZDelete.html
+END
+ZAliasedName.html
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZAliasedName.html
+END
+ZStatement.html
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZStatement.html
+END
+ZInsert.html
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZInsert.html
+END
+ZQuery.html
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZQuery.html
+END
+ZOrderBy.html
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svnroot/zql/!svn/ver/1/doc/api/org/gibello/zql/ZOrderBy.html
+END

@@ -1,0 +1,26 @@
+
+The demo comes with 2 "database" files: num.db and contact.db.
+They are text files: you can view them:
+One is a list of numbers, the other a list of contacts with names and e-mails.
+
+The demo allows to query those two files in SQL: queries are very simple
+(no joins, no aggregate functions):
+you can have a look at queries.num or queries.contact, they contain query
+examples.
+
+To run the demo:
+
+java ZDemo
+
+then send queries like "select * from num;", etc...
+
+You can also run the demo with the sample queries:
+java ZDemo queries.num
+ or
+java ZDemo queries.contact
+
+Of course, the demo sources are available: see ZDemo.java for more info.
+
+Have fun,
+ Pierre-Yves Gibello - pierreyves.gibello@experlog.com
+

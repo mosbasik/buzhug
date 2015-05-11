@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 33
+/svnroot/zql/!svn/ver/4/demo/data
+END
+contact.db
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/zql/!svn/ver/1/demo/data/contact.db
+END
+num.db
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svnroot/zql/!svn/ver/1/demo/data/num.db
+END
+queries.contact
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/zql/!svn/ver/1/demo/data/queries.contact
+END
+Ztest.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/zql/!svn/ver/4/demo/data/Ztest.java
+END
+StringDemo.java
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/zql/!svn/ver/4/demo/data/StringDemo.java
+END
+queries.num
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svnroot/zql/!svn/ver/1/demo/data/queries.num
+END
+README
+K 25
+svn:wc:ra_dav:version-url
+V 40
+/svnroot/zql/!svn/ver/1/demo/data/README
+END
+ZDemo.java
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/zql/!svn/ver/4/demo/data/ZDemo.java
+END
