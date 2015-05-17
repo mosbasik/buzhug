@@ -33,6 +33,7 @@ public class SqlParser {
 
         if(args.length < 1) {
             System.out.println("Reading SQL from stdin (quit; or exit; to quit)");
+            System.out.println("End all complete commands with ';'");
         } 
         else {
             try {
@@ -416,16 +417,19 @@ public class SqlParser {
         String cmd1 = "recs = " + table + ".select(None, " + where + ")";
         // deleting
         String cmd2 = table + ".delete(recs)";
+        String cmd3 = table + ".cleanup()";
         // print out the formated statements, mostly for debugging purposes
         System.out.println("Buzhug-formated statements:");
         System.out.println(cmd1);
         System.out.println(cmd2);
+        System.out.println(cmd3);
         // call buzhug
         try {
             //load the table
             interpreter.exec(table + " = Base('" + basePath + table + "').open()");
             interpreter.exec(cmd1);
             interpreter.exec(cmd2);
+            interpreter.exec(cmd3);
         }
         catch (Exception e) {
             System.out.println("Python Interpreter exception: " + e.getMessage());
