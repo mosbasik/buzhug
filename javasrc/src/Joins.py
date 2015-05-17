@@ -1,119 +1,296 @@
 from buzhug import Base
+from buzhug import Record
 import string
 import random
-
-def nested_join(t1, t2, alias = null):
-	db1 = Base(t1)
-	db2 = Base(t2)
+import os
+def nested_join(db1, db2, alias = None):
 	name  = alias
 	fields = []
 	for a in db1.fields:
-		fields.append((a, db1.fields[a]))
-	if alias == null:
-		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
-	else
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
+		if a is not '__version__' and a is not '__id__':
+			fields.append((a, db1.fields[a]))
+	for a in db2.fields:
+		if a is not '__version__' and a is not '__id__':
+			if (a, db2.fields[a]) not in fields:
+				fields.append((a, db2.fields[a]))
+			else:
+				fields.remove((a, db2.fields[a]))
+				fields.append((db1.name+"."+a, db1.fields[a]))
+				fields.append((db2.name+"."+a, db2.fields[a]))
+				
+	if alias == None:
+		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+		newDB = Base(name)
+	else:
+		newDB = Base(name)
+	# print fields
+	newDB.create(*tuple(fields))
+	print newDB.field_names
 	for record1 in db1:
 		for record2 in db2:
-			combine = record1.append(record2)
-			newDB.insert(combine)
-	return newDB
+			rec = []
+			for f in db1.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(getattr(record1, f))
+			for f in db2.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(getattr(record2, f))
+			newDB.insert(*tuple(rec))
+	return (newDB, name)
 
-def inner_join(t1, t2, alias = null, t1_column, t2_column):
-	db1 = Base(t1)
-	db2 = Base(t2)
+def inner_join(db1, db2,  t1_column, t2_column, alias = None):
 	name  = alias
 	fields = []
 	for a in db1.fields:
-		fields.append((a, db1.fields[a]))
-	if alias == null:
-		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
-	else
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
+		if a is not '__version__' and a is not '__id__':
+			fields.append((a, db1.fields[a]))
+	for a in db2.fields:
+		if a is not '__version__' and a is not '__id__':
+			if (a, db2.fields[a]) not in fields:
+				fields.append((a, db2.fields[a]))
+			else:
+				fields.remove((a, db2.fields[a]))
+				fields.append((db1.name+"."+a, db1.fields[a]))
+				fields.append((db2.name+"."+a, db2.fields[a]))
+				
+	if alias == None:
+		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+		newDB = Base(name)
+	else:
+		newDB = Base(name)
+	# print fields
+	newDB.create(*tuple(fields))
 	for record1 in db1:
 		for record2 in db2:
-			if record1[t1_column] == record2[t2_column]:
-				combine = record1.append(record2)
-				newDB.insert(combine)
-	return newDB
+			if getattr(record1, t1_column) == getattr(record2, t2_column):
+				rec = []
+				for f in db1.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record1, f))
+				for f in db2.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record2, f))
+				newDB.insert(*tuple(rec))
+	return (newDB, name)
 
-def left_join(t1, t2, alias = null, t1_column, t2_column):
-	db1 = Base(t1)
-	db2 = Base(t2)
+def left_join(db1, db2, t1_column, t2_column, alias = None):
 	name  = alias
 	fields = []
 	for a in db1.fields:
-		fields.append((a, db1.fields[a]))
-	if alias == null:
-		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
-	else
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
+		if a is not '__version__' and a is not '__id__':
+			fields.append((a, db1.fields[a]))
+	for a in db2.fields:
+		if a is not '__version__' and a is not '__id__':
+			if (a, db2.fields[a]) not in fields:
+				fields.append((a, db2.fields[a]))
+			else:
+				fields.remove((a, db2.fields[a]))
+				fields.append((db1.name+"."+a, db1.fields[a]))
+				fields.append((db2.name+"."+a, db2.fields[a]))
+				
+	if alias == None:
+		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+		newDB = Base(name)
+	else:
+		newDB = Base(name)
+	# print fields
+	newDB.create(*tuple(fields))
 	for record1 in db1:
 		added = False
 		for record2 in db2:
-			if record1[t1_column] == record2[t2_column]:
+			if getattr(record1, t1_column) == getattr(record2, t2_column):
 				added = True
-				combine = record1.append(record2)
-				newDB.insert(combine)
+				rec = []
+				for f in db1.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record1, f))
+				for f in db2.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record2, f))
+				newDB.insert(*tuple(rec))
 		if not added:
-			newDB.insert(record1)
-	return newDB
+			rec = []
+			for f in db1.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(getattr(record1, f))
+			for f in db2.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(None)
+			newDB.insert(*tuple(rec))
+	return (newDB, name)
 
-def right_join(t1, t2, alias = null, t1_column, t2_column):
-	db1 = Base(t1)
-	db2 = Base(t2)
+def right_join(db1, db2,  t1_column, t2_column, alias = None):
 	name  = alias
 	fields = []
 	for a in db1.fields:
-		fields.append((a, db1.fields[a]))
-	if alias == null:
-		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
-	else
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
+		if a is not '__version__' and a is not '__id__':
+			fields.append((a, db1.fields[a]))
+	for a in db2.fields:
+		if a is not '__version__' and a is not '__id__':
+			if (a, db2.fields[a]) not in fields:
+				fields.append((a, db2.fields[a]))
+			else:
+				fields.remove((a, db2.fields[a]))
+				fields.append((db1.name+"."+a, db1.fields[a]))
+				fields.append((db2.name+"."+a, db2.fields[a]))
+				
+	if alias == None:
+		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+		newDB = Base(name)
+	else:
+		newDB = Base(name)
+	# print fields
+	newDB.create(*tuple(fields))
 	for record2 in db2:
 		added = False
 		for record1 in db1:
-			if record1[t1_column] == record2[t2_column]:
+			if getattr(record1, t1_column) == getattr(record2, t2_column):
 				added = True
-				combine = record1.append(record2)
-				newDB.insert(combine)
+				rec = []
+				for f in db1.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record1, f))
+				for f in db2.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record2, f))
+				newDB.insert(*tuple(rec))
 		if not added:
-			newDB.insert(record2)
-	return newDB
+			rec = []
+			for f in db1.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(None)
+			for f in db2.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(getattr(record2, f))
+			newDB.insert(*tuple(rec))
+	return (newDB, name)
 
-def full_join(t1, t2, alias = null, t1_column, t2_column):
-	db1 = Base(t1)
-	db2 = Base(t2)
+def full_join(db1, db2, t1_column, t2_column, alias = None):
 	name  = alias
 	fields = []
 	for a in db1.fields:
-		fields.append((a, db1.fields[a]))
-	if alias == null:
-		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
-	else
-		newDB = Base(t1[:t1.rfind('/')] + "/" + name)
+		if a is not '__version__' and a is not '__id__':
+			fields.append((a, db1.fields[a]))
+	for a in db2.fields:
+		if a is not '__version__' and a is not '__id__':
+			if (a, db2.fields[a]) not in fields:
+				fields.append((a, db2.fields[a]))
+			else:
+				fields.remove((a, db2.fields[a]))
+				fields.append((db1.name+"."+a, db1.fields[a]))
+				fields.append((db2.name+"."+a, db2.fields[a]))
+				
+	if alias == None:
+		name = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+		newDB = Base(name)
+	else:
+		newDB = Base(name)
+	# print fields
+	newDB.create(*tuple(fields))
+
 	for record2 in db2:
 		added = False
 		for record1 in db1:
-			if record1[t1_column] == record2[t2_column]:
+			if getattr(record1, t1_column) == getattr(record2, t2_column):
 				added = True
-				combine = record1.append(record2)
-				newDB.insert(combine)
+				rec = []
+				for f in db1.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record1, f))
+				for f in db2.field_names:
+					if f is not '__id__' and f is not '__version__':
+						rec.append(getattr(record2, f))
+				newDB.insert(*tuple(rec))
 		if not added:
-			newDB.insert(record2)
+			rec = []
+			for f in db1.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(None)
+			for f in db2.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(getattr(record2, f))
+			newDB.insert(*tuple(rec))
 	for record1 in db1:
 		added = False
 		for record2 in db2:
-			if record1[t1_column] == record2[t2_column]:
+			if getattr(record1, t1_column) == getattr(record2, t2_column):
 				added = True
-				continue
+				break
 		if not added:
-			newDB.insert(record1)
-	return newDB
+			rec = []
+			for f in db1.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(getattr(record1, f))
+			for f in db2.field_names:
+				if f is not '__id__' and f is not '__version__':
+					rec.append(None)
+			newDB.insert(*tuple(rec))
+	return (newDB, name)
+
+def test():
+	# os.remove("test_db1.txt")
+	db1 = Base("test_db1_3")
+	db1.create(("a", int))
+	db1.insert(a=2)
+	db1.insert(a=3)
+	db1.insert(a=4)
+	db1.insert(a=4)
+	db1.insert(a=5)
 
 
+	db2 = Base("test_db1_4")
+	db2.create(("b", int))
+	db2.insert(b=4)
+	db2.insert(b=5)
+	db2.insert(b=5)
+	db2.insert(b=6)
+	db2.insert(b=7)
+
+	join = nested_join(db1, db2)
+	db = join[0]
+	name = join[1]
+
+	result_set = db.select()
+	print result_set
+	for record in result_set:
+		print record
+
+	join = inner_join(db1, db2, "a", "b")
+	db = join[0]
+	name = join[1]
+
+	result_set = db.select()
+	print result_set
+	for record in result_set:
+		print record
+
+	join = right_join(db1, db2, "a", "b")
+	db = join[0]
+	name = join[1]
+
+	result_set = db.select()
+	print result_set
+	for record in result_set:
+		print record
+
+	join = left_join(db1, db2, "a", "b")
+	db = join[0]
+	name = join[1]
+
+	result_set = db.select()
+	print result_set
+	for record in result_set:
+		print record
+
+	join = full_join(db1, db2, "a", "b")
+	db = join[0]
+	name = join[1]
+
+	result_set = db.select()
+	print result_set
+	for record in result_set:
+		print record
+
+	
+
+test()

@@ -2,36 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0274ca27-abe7-4951-a7bb-2a95c6a44dd7" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/_google_ipaddr_r234$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/_google_ipaddr_r234$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/atexit$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/atexit$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug_algos$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug_algos$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug_files$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug_files$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug_info$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/buzhug/buzhug_info$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/copy_reg$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/copy_reg$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/datetime$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/datetime$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/linecache$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/linecache$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/os$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/os$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/cachedir/packages/packages.idx" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/cachedir/packages/packages.idx" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/posixpath$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/posixpath$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/random$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/random$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/re$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/re$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/shutil$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/shutil$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/socket$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/socket$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/sre_compile$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/sre_compile$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/sre_constants$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/sre_constants$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/sre_parse$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/sre_parse$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/stat$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/stat$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/string$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/string$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/tempfile$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/tempfile$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/threading$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/threading$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/token$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/token$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/tokenize$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/tokenize$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/traceback$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/traceback$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/types$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/types$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/urllib$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/urllib$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/urlparse$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/urlparse$py.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/warnings$py.class" afterPath="$PROJECT_DIR$/javasrc/lib/Jython/Lib/warnings$py.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/src/Joins.py" afterPath="$PROJECT_DIR$/javasrc/src/Joins.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sqlparser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -53,7 +25,18 @@
     <favorites_list name="sqlparser" />
   </component>
   <component name="FileEditorManager">
-    <leaf />
+    <leaf>
+      <file leaf-file-name="SqlParser.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/javasrc/src/SqlParser.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.33274022" vertical-offset="4463" max-vertical-offset="9015">
+              <caret line="320" column="32" selection-start-line="320" selection-start-column="28" selection-end-line="320" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FindManager">
     <FindUsagesManager>
@@ -103,8 +86,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -343,22 +324,10 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="sqlparser" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="buzhug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="buzhug" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -641,7 +610,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="18" y="23" width="1346" height="685" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -658,7 +627,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962853" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962853" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -864,8 +833,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javasrc/src/SqlParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.20408164" vertical-offset="630" max-vertical-offset="9015">
-          <caret line="44" column="13" selection-start-line="44" selection-start-column="13" selection-end-line="44" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.33274022" vertical-offset="4463" max-vertical-offset="9015">
+          <caret line="320" column="32" selection-start-line="320" selection-start-column="28" selection-end-line="320" selection-end-column="32" />
           <folding />
         </state>
       </provider>
