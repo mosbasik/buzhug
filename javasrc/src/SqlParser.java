@@ -137,11 +137,6 @@ public class SqlParser {
                 // fullCommand string and begin reading the next command.
                 fullCommand = "";
             }
-            /*
-             * TODO: find a way to handle the fact that a buzhug table must
-             * be opened within the python environment before DML can be
-             * called on it.
-             */
         }
     }
     
@@ -440,7 +435,7 @@ public class SqlParser {
     
     private static void callSelect(ZQuery st) {
         // result_set holds the selected
-        String cmd = "result_set = ";
+        String cmd = "result_set = db.select(";
         // make sure its a simple select
         if(st.getFrom().contains("join"))
         {
@@ -448,25 +443,32 @@ public class SqlParser {
             return;
         }
     
+        // Get the select values and form a string with them of the form
+        // ['col1', 'col2', ..., 'colN']
+        // If the select is a wildcard, however, then values is set to "None"
         Vector columns = st.getSelect();
-        String values = "[";
-        for (int i = 0; i < columns.size(); i++) {
-            values = values + columns.get(i) + ",";
+        String values = "";
+        if (!columns.get(0).toString().equals("*")) {
+            values = "[";
+            for (int i = 0; i < columns.size(); i++) {
+                values = values + "'" + columns.get(i) + "',";
+            }
+            // Remove the final comma
+            values = values.substring(0, values.length()-1);
+            values += "]";
         }
-        values = values.substring(0, values.length()-1);
-        values += "]";
-        
-        // If the select is a wildcard, then set values to ""
-        if (values.substring(1,2).equals("*")) {
-            values = "";
+        else {
+            values = "None";
         }
-        cmd += "db.select("+values + ")";
         
         // if there is a where, we add it
         if(st.getWhere() != null)
         {
-            cmd = cmd.substring(0, cmd.length() - 1);
-            cmd += "," + st.getWhere().toString()+")";
+            String where = formatWhere(st.getWhere());
+            cmd += values + ", " + where + ")";
+        }
+        else {
+            cmd += values + ")";
         }
         System.out.println(cmd);
 
@@ -478,7 +480,6 @@ public class SqlParser {
             interpreter.exec(cmd);
             // Get the results so we can print them in java
             PyObject test = interpreter.eval("result_set");
-            //System.out.println(test.toString());
             selectPrinter(test.toString());
         }
         catch (Exception e) {
@@ -570,18 +571,22 @@ public class SqlParser {
         int lastBrack = sel.indexOf('>');
         while (lastBrack != -1) {
             String thisRow = sel.substring(1, lastBrack);
-            // Remove the __id__ and __version__ fields that buzhug adds
-            int spaceLoc = thisRow.indexOf(' ');
-            thisRow = thisRow.substring(spaceLoc+1);
-            spaceLoc = thisRow.indexOf(' ');
-            thisRow = thisRow.substring(spaceLoc+1);
+            // Check to see that __id__ and __version__ are actually present,
+            // since they only seem to be added for wildcard queries
+            if(thisRow.indexOf("__id__") != -1) {
+                // Remove the __id__ and __version__ fields that buzhug adds
+                int spaceLoc = thisRow.indexOf(' ');
+                thisRow = thisRow.substring(spaceLoc+1);
+                spaceLoc = thisRow.indexOf(' ');
+                thisRow = thisRow.substring(spaceLoc+1);
+            }
             
             row.add(thisRow);
-            // +2 to account for the comma and the space after the '>'
-            if (lastBrack+2 > sel.length())
+            // +3 to account for the ', <' substring after the '>'
+            if (lastBrack+3 > sel.length())
                 sel = "";
             else
-                sel = sel.substring(lastBrack+2);
+                sel = sel.substring(lastBrack+3);
                 
             lastBrack = sel.indexOf('>');
         }
