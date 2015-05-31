@@ -25,7 +25,10 @@ public class SqlParser {
         sys.path.append(new PyString("lib/buzhug"));
         interpreter.exec("import buzhug");
         interpreter.exec("from buzhug import Base");
-        
+        interpreter.exec("import sys");
+        interpreter.exec("sys.path.insert(0, '/Users/saziz/Desktop/cs123/buzhug/javasrc/src')");
+        interpreter.exec("import Joins");
+
         // Default to reading from stdin
         BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
         String thisLine = "";
@@ -103,8 +106,10 @@ public class SqlParser {
                         InputStream stream = new ByteArrayInputStream(
                                                  fullCommand.getBytes("UTF-8"));
                         ZqlParser p = new ZqlParser(stream);
+                        System.out.println("MADE IT TO TRY");
+
                         ZStatement st = p.readStatement();
-                        
+                        System.out.println("MADE IT TO TRY");
                         if (st instanceof ZInsert) {
                             callInsert((ZInsert)st);
                         }
@@ -437,9 +442,12 @@ public class SqlParser {
         // result_set holds the selected
         String cmd = "result_set = db.select(";
         // make sure its a simple select
+        boolean isJoined = false;
         if(st.getFrom().contains("join"))
         {
+            isJoined = true;
             System.out.println("Only simple selects work");
+
             return;
         }
     
@@ -471,16 +479,42 @@ public class SqlParser {
             cmd += values + ")";
         }
         System.out.println(cmd);
+        String order = null;
+        if(st.getOrderBy() != null)
+        {
+            order = "result_set = result_set.sort_by(\"";
+            for(ZOrderBy OB: (Vector<ZOrderBy>)st.getOrderBy())
+            {
+                String[] orderBy = OB.toString().split(" ");
+                if(OB.getAscOrder())
+                    order+="+";
+                else
+                    order+="-";
+                order += orderBy[0];
+            }
+            order += "\")";
+            System.out.println(order);
+        }
 
         // run on python
         try {
             //Get the table name
-            String tableName = st.getFrom().get(0).toString();
-            interpreter.exec("db = Base('" + basePath + tableName + "').open()");
-            interpreter.exec(cmd);
-            // Get the results so we can print them in java
-            PyObject test = interpreter.eval("result_set");
-            selectPrinter(test.toString());
+            if(isJoined)
+            {
+                // UPDATE THIS
+                // IF FIND A WAY TO PARSE JOINS
+
+            }
+            else {
+                String tableName = st.getFrom().get(0).toString();
+                interpreter.exec("db = Base('" + basePath + tableName + "').open()");
+                interpreter.exec(cmd);
+                if(order!=null)
+                    interpreter.exec(order);
+                // Get the results so we can print them in java
+                PyObject test = interpreter.eval("result_set");
+                selectPrinter(test.toString());
+            }
         }
         catch (Exception e) {
             System.out.println("Python Interpreter exception: " + e.getMessage());

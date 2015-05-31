@@ -291,6 +291,4 @@ def test():
 	for record in result_set:
 		print record
 
-	
 
-test()
