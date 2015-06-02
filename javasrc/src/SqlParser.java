@@ -26,7 +26,7 @@ public class SqlParser {
         interpreter.exec("import buzhug");
         interpreter.exec("from buzhug import Base");
         interpreter.exec("import sys");
-        interpreter.exec("sys.path.insert(0, '/Users/saziz/Desktop/cs123/buzhug/javasrc/src')");
+        interpreter.exec("sys.path.insert(0, '" +System.getProperty("user.dir") +"/src')");
         interpreter.exec("import Joins");
 
         // Default to reading from stdin
@@ -101,15 +101,53 @@ public class SqlParser {
                     callDrop(fullCommand);
                 }
                 else {
+                    if(fullCommand.toLowerCase().contains("join"))
+                    {
+                        // the join must be in this format:
+                        // select * from b left join c on b=a;
+                        // where b has col b and c has col a
+
+
+                        fullCommand=fullCommand.toLowerCase();
+                        String joinType = getJoinType(fullCommand);
+                        String newFcmd;
+                        String [] arr= fullCommand.split(" ");
+                        newFcmd = fullCommand.substring(0, fullCommand.indexOf("from"));
+                        int x;
+                        for(x = 0; x < arr.length;x++)
+                        {
+                            if(arr[x].equals("from")) {
+                                newFcmd += arr[x] + " ";
+                                newFcmd += joinType + " ";
+                            }
+                            if(arr[x].equals( "on"))
+                            {
+                                x+=2;
+                                for(;x<arr.length;x++)
+                                    newFcmd+= arr[x] + " ";
+                                if(!newFcmd.contains(";"))
+                                    newFcmd=newFcmd.substring(0, newFcmd.length()-1)+";";
+                                break;
+                            }
+                        }
+                        for(;x<arr.length;x++)
+                            newFcmd+= arr[x] + " ";
+                        if(!newFcmd.contains(";"))
+                            newFcmd=newFcmd.substring(0, newFcmd.length()-1)+";";
+
+                        System.out.println(newFcmd);
+                        fullCommand = newFcmd;
+                    }
+
                     // Create a ZqlParser from fullCommand
                     try {
                         InputStream stream = new ByteArrayInputStream(
                                                  fullCommand.getBytes("UTF-8"));
                         ZqlParser p = new ZqlParser(stream);
-                        System.out.println("MADE IT TO TRY");
+//                        System.out.println("MADE IT TO TRY");
 
                         ZStatement st = p.readStatement();
-                        System.out.println("MADE IT TO TRY");
+//                        System.out.println("MADE IT TO TRY");
                         if (st instanceof ZInsert) {
                             callInsert((ZInsert)st);
                         }
@@ -143,6 +181,136 @@ public class SqlParser {
                 fullCommand = "";
             }
         }
+    }
+    public static String getJoinType(String cmd)
+    {
+        //SELECT column_name(s)
+//        FROM table1
+//        LEFT OUTER JOIN table2
+//        ON table1.column_name=table2.column_name;
+        if(cmd.toLowerCase().contains("left join"))
+        {
+            String[] sp = cmd.toLowerCase().split(" ");
+            String t1 = null;
+            String t2 = null;
+            String col1 = null;
+            String col2 = null;
+            for(int x = 0; x<sp.length;x++)
+            {
+                if(sp[x].equals("left"))
+                    t1 = sp[x-1];
+                if(sp[x].equals("join"))
+                    t2 = sp[x+1];
+                if(sp[x].equals("on")) {
+                    col1 = sp[x + 1].split("=")[0];
+                    col2 = sp[x + 1].split("=")[1];
+                }
+            }
+            interpreter.exec("t1 = Base(\"" + basePath  + t1 + "\").open()");
+            interpreter.exec("t2 = Base(\"" + basePath + t2+"\").open()");
+            col2 = col2.replaceAll("[^A-Za-z0-9]", "");
+            interpreter.exec("res = Joins.left_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
+            PyObject newTable = interpreter.eval("res[1]");
+            return newTable.toString();
+        }
+        else if(cmd.toLowerCase().contains("right join"))
+        {
+            String[] sp = cmd.toLowerCase().split(" ");
+            String t1 = null;
+            String t2 = null;
+            String col1 = null;
+            String col2 = null;
+            for(int x = 0; x<sp.length;x++)
+            {
+                if(sp[x].equals("right"))
+                    t1 = sp[x-1];
+                if(sp[x].equals("join"))
+                    t2 = sp[x+1];
+                if(sp[x].equals("on")) {
+                    col1 = sp[x + 1].split("=")[0];
+                    col2 = sp[x + 1].split("=")[1];
+                }
+            }
+            interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
+            interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
+            col2 = col2.replaceAll("[^A-Za-z0-9]", "");
+            interpreter.exec("res = Joins.right_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
+            PyObject newTable = interpreter.eval("res[1]");
+            return newTable.toString();
+        }
+        else if(cmd.toLowerCase().contains("full join"))
+        {
+            String[] sp = cmd.toLowerCase().split(" ");
+            String t1 = null;
+            String t2 = null;
+            String col1 = null;
+            String col2 = null;
+            for(int x = 0; x<sp.length;x++)
+            {
+                if(sp[x].equals("full"))
+                    t1 = sp[x-1];
+                if(sp[x].equals("join"))
+                    t2 = sp[x+1];
+                if(sp[x].equals("on")) {
+                    col1 = sp[x + 1].split("=")[0];
+                    col2 = sp[x + 1].split("=")[1];
+                }
+            }
+            interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
+            interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
+            col2 = col2.replaceAll("[^A-Za-z0-9]", "");
+            interpreter.exec("res = Joins.full_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
+            PyObject newTable = interpreter.eval("res[1]");
+            return newTable.toString();
+        }
+        else if(cmd.toLowerCase().contains("cross join"))
+        {
+            String[] sp = cmd.toLowerCase().split(" ");
+            String t1 = null;
+            String t2 = null;
+            for(int x = 0; x<sp.length;x++)
+            {
+                if(sp[x].equals("cross"))
+                    t1 = sp[x-1];
+                if(sp[x].equals("join"))
+                    t2 = sp[x+1];
+            }
+            t2 = t2.replaceAll("[^A-Za-z0-9]", "");
+            interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
+            interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
+            interpreter.exec("res = Joins.nested_join(t1, t2)");
+            PyObject newTable = interpreter.eval("res[1]");
+            return newTable.toString();
+        }
+        else if(cmd.toLowerCase().contains("join"))
+        {
+            String[] sp = cmd.toLowerCase().split(" ");
+            String t1 = null;
+            String t2 = null;
+            String col1 = null;
+            String col2 = null;
+            for(int x = 0; x<sp.length;x++)
+            {
+                if(sp[x].equals("inner"))
+                    t1 = sp[x-1];
+                if(sp[x].equals("join")) {
+                    t2 = sp[x + 1];
+                    if(t1==null)
+                        t1 = sp[x-1];
+                }
+                if(sp[x].equals("on")) {
+                    col1 = sp[x + 1].split("=")[0];
+                    col2 = sp[x + 1].split("=")[1];
+                }
+            }
+            interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
+            interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
+            col2 = col2.replaceAll("[^A-Za-z0-9]", "");
+            interpreter.exec("res = Joins.inner_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
+            PyObject newTable = interpreter.eval("res[1]");
+            return newTable.toString();
+        }
+        return null;
     }
     
     /* Zql does not parse SQL DDL, so we are forced to manually parse a string
