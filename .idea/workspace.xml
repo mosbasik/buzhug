@@ -2,23 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0274ca27-abe7-4951-a7bb-2a95c6a44dd7" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/__defaults__" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/__del_rows__" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/__id__" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/__info__" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/__pos__" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/__version__" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/_id_pos" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/a" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/tables/q/b" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/src/Joins.py" afterPath="$PROJECT_DIR$/javasrc/src/Joins.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/javasrc/SqlParser.java.orig" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/src/SqlParser.java" afterPath="$PROJECT_DIR$/javasrc/src/SqlParser.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/tables/c/__id__" afterPath="$PROJECT_DIR$/javasrc/tables/c/__id__" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/tables/c/__pos__" afterPath="$PROJECT_DIR$/javasrc/tables/c/__pos__" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/tables/c/__version__" afterPath="$PROJECT_DIR$/javasrc/tables/c/__version__" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/tables/c/_id_pos" afterPath="$PROJECT_DIR$/javasrc/tables/c/_id_pos" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/javasrc/tables/c/a" afterPath="$PROJECT_DIR$/javasrc/tables/c/a" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="sqlparser.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -124,8 +109,8 @@
       <file leaf-file-name="SqlParser.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/javasrc/src/SqlParser.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-19.341373" vertical-offset="10695" max-vertical-offset="12180">
-              <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+            <state vertical-scroll-proportion="-11.35436" vertical-offset="8370" max-vertical-offset="12630">
+              <caret line="160" column="38" selection-start-line="160" selection-start-column="25" selection-end-line="160" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -707,7 +692,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="18" y="23" width="1346" height="685" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -724,7 +709,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962853" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962853" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1099,8 +1084,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/javasrc/src/SqlParser.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-19.341373" vertical-offset="10695" max-vertical-offset="12180">
-          <caret line="28" column="0" selection-start-line="28" selection-start-column="0" selection-end-line="28" selection-end-column="0" />
+        <state vertical-scroll-proportion="-11.35436" vertical-offset="8370" max-vertical-offset="12630">
+          <caret line="160" column="38" selection-start-line="160" selection-start-column="25" selection-end-line="160" selection-end-column="38" />
           <folding />
         </state>
       </provider>

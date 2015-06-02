@@ -25,7 +25,6 @@ def nested_join(db1, db2, alias = None):
 		newDB = Base("tables/"+name)
 	# print fields
 	newDB.create(*tuple(fields))
-	print newDB.field_names
 	for record1 in db1:
 		for record2 in db2:
 			rec = []
@@ -81,14 +80,12 @@ def left_join(db1, db2, t1_column, t2_column, alias = None):
 			fields.append((a, db1.fields[a]))
 	for a in db2.fields:
 		if a != '__version__' and a != '__id__':
-			print a
 			if (a, db2.fields[a]) not in fields:
 				fields.append((a, db2.fields[a]))
 			else:
 				fields.remove((a, db2.fields[a]))
 				fields.append((db1.name[db1.name.rfind("/")+1:]+"."+a, db1.fields[a]))
 				fields.append((db1.name[db1.name.rfind("/")+1:]+"."+a, db2.fields[a]))
-	print db2.fields
 	if alias == None:
 		name = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
 		newDB = Base("tables/"+name)

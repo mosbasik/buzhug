@@ -19,6 +19,8 @@ public class SqlParser {
 
     
     public static void main(String args[]) {
+        // Setting up the environment and importing
+        // important parts
         System.out.println("Preparing buzhug environment...");
         PySystemState sys = Py.getSystemState();
         sys.path.append(new PyString("lib/Jython/jython.jar"));
@@ -107,36 +109,9 @@ public class SqlParser {
                         // select * from b left join c on b=a;
                         // where b has col b and c has col a
 
-
-                        fullCommand=fullCommand.toLowerCase();
-                        String joinType = getJoinType(fullCommand);
-                        String newFcmd;
-                        String [] arr= fullCommand.split(" ");
-                        newFcmd = fullCommand.substring(0, fullCommand.indexOf("from"));
-                        int x;
-                        for(x = 0; x < arr.length;x++)
-                        {
-                            if(arr[x].equals("from")) {
-                                newFcmd += arr[x] + " ";
-                                newFcmd += joinType + " ";
-                            }
-                            if(arr[x].equals( "on"))
-                            {
-                                x+=2;
-                                for(;x<arr.length;x++)
-                                    newFcmd+= arr[x] + " ";
-                                if(!newFcmd.contains(";"))
-                                    newFcmd=newFcmd.substring(0, newFcmd.length()-1)+";";
-                                break;
-                            }
-                        }
-                        for(;x<arr.length;x++)
-                            newFcmd+= arr[x] + " ";
-                        if(!newFcmd.contains(";"))
-                            newFcmd=newFcmd.substring(0, newFcmd.length()-1)+";";
-
-                        System.out.println(newFcmd);
-                        fullCommand = newFcmd;
+                        // calls a function that changes the command to
+                        // incorporate the join table
+                        fullCommand = JoinFormatter(fullCommand);
                     }
 
                     // Create a ZqlParser from fullCommand
@@ -182,12 +157,47 @@ public class SqlParser {
             }
         }
     }
+
+    public static String JoinFormatter(String cmd)
+    {
+        // gets the join table
+        cmd=cmd.toLowerCase();
+        String joinTable = getJoinType(cmd);
+
+        // makes a new string
+        String newFcmd;
+        String [] arr= cmd.split(" ");
+        newFcmd = cmd.substring(0, cmd.indexOf("from"));
+        int x;
+        // goes through and finds where the command ends
+        for(x = 0; x < arr.length;x++)
+        {
+            if(arr[x].equals("from")) {
+                newFcmd += arr[x] + " ";
+                newFcmd += joinTable + " ";
+            }
+            if(arr[x].equals( "on"))
+            {
+                x+=2;
+                for(;x<arr.length;x++)
+                    newFcmd+= arr[x] + " ";
+                if(!newFcmd.contains(";"))
+                    newFcmd=newFcmd.substring(0, newFcmd.length()-1)+";";
+                break;
+            }
+        }
+        // adds the rest of command
+        for(;x<arr.length;x++)
+            newFcmd+= arr[x] + " ";
+        // makes sure it has a colon
+        if(!newFcmd.contains(";"))
+            newFcmd=newFcmd.substring(0, newFcmd.length()-1)+";";
+
+        return newFcmd;
+    }
     public static String getJoinType(String cmd)
     {
-        //SELECT column_name(s)
-//        FROM table1
-//        LEFT OUTER JOIN table2
-//        ON table1.column_name=table2.column_name;
+        // called for left join
         if(cmd.toLowerCase().contains("left join"))
         {
             String[] sp = cmd.toLowerCase().split(" ");
@@ -195,6 +205,7 @@ public class SqlParser {
             String t2 = null;
             String col1 = null;
             String col2 = null;
+            // finds the tables and columns
             for(int x = 0; x<sp.length;x++)
             {
                 if(sp[x].equals("left"))
@@ -206,13 +217,16 @@ public class SqlParser {
                     col2 = sp[x + 1].split("=")[1];
                 }
             }
+            // calls the python functions
             interpreter.exec("t1 = Base(\"" + basePath  + t1 + "\").open()");
             interpreter.exec("t2 = Base(\"" + basePath + t2+"\").open()");
             col2 = col2.replaceAll("[^A-Za-z0-9]", "");
             interpreter.exec("res = Joins.left_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
             PyObject newTable = interpreter.eval("res[1]");
+            // returns the new table's name
             return newTable.toString();
         }
+        // called for right join
         else if(cmd.toLowerCase().contains("right join"))
         {
             String[] sp = cmd.toLowerCase().split(" ");
@@ -220,6 +234,7 @@ public class SqlParser {
             String t2 = null;
             String col1 = null;
             String col2 = null;
+            // finds the tables and columns
             for(int x = 0; x<sp.length;x++)
             {
                 if(sp[x].equals("right"))
@@ -231,13 +246,16 @@ public class SqlParser {
                     col2 = sp[x + 1].split("=")[1];
                 }
             }
+            // runs python
             interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
             interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
             col2 = col2.replaceAll("[^A-Za-z0-9]", "");
             interpreter.exec("res = Joins.right_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
             PyObject newTable = interpreter.eval("res[1]");
+            // returns new table name
             return newTable.toString();
         }
+        //called for full join
         else if(cmd.toLowerCase().contains("full join"))
         {
             String[] sp = cmd.toLowerCase().split(" ");
@@ -245,6 +263,7 @@ public class SqlParser {
             String t2 = null;
             String col1 = null;
             String col2 = null;
+            // finds the tables and columns
             for(int x = 0; x<sp.length;x++)
             {
                 if(sp[x].equals("full"))
@@ -256,18 +275,22 @@ public class SqlParser {
                     col2 = sp[x + 1].split("=")[1];
                 }
             }
+            // runs python
             interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
             interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
             col2 = col2.replaceAll("[^A-Za-z0-9]", "");
             interpreter.exec("res = Joins.full_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
             PyObject newTable = interpreter.eval("res[1]");
+            //returns table name
             return newTable.toString();
         }
+        // called for cross joins
         else if(cmd.toLowerCase().contains("cross join"))
         {
             String[] sp = cmd.toLowerCase().split(" ");
             String t1 = null;
             String t2 = null;
+            // finds the tables and columns
             for(int x = 0; x<sp.length;x++)
             {
                 if(sp[x].equals("cross"))
@@ -275,13 +298,16 @@ public class SqlParser {
                 if(sp[x].equals("join"))
                     t2 = sp[x+1];
             }
+            // runs python
             t2 = t2.replaceAll("[^A-Za-z0-9]", "");
             interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
             interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
             interpreter.exec("res = Joins.nested_join(t1, t2)");
             PyObject newTable = interpreter.eval("res[1]");
+            // returns table name
             return newTable.toString();
         }
+        // called for inner joins
         else if(cmd.toLowerCase().contains("join"))
         {
             String[] sp = cmd.toLowerCase().split(" ");
@@ -289,6 +315,7 @@ public class SqlParser {
             String t2 = null;
             String col1 = null;
             String col2 = null;
+            // finds the tables and columns
             for(int x = 0; x<sp.length;x++)
             {
                 if(sp[x].equals("inner"))
@@ -303,11 +330,14 @@ public class SqlParser {
                     col2 = sp[x + 1].split("=")[1];
                 }
             }
+            //runs python
+
             interpreter.exec("t1 = Base(\"" + basePath + t1 + "\").open()");
             interpreter.exec("t2 = Base(\"" + basePath+t2+"\").open()");
             col2 = col2.replaceAll("[^A-Za-z0-9]", "");
             interpreter.exec("res = Joins.inner_join(t1, t2, \""+col1 + "\", \"" + col2+"\")");
             PyObject newTable = interpreter.eval("res[1]");
+            // returns table name
             return newTable.toString();
         }
         return null;
